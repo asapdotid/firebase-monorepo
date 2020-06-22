@@ -1,0 +1,50 @@
+{
+  "private": true,
+  "name": "firebase-monorepo",
+  "description": "Web firebase basic setup workspace project (yarn) use NestJs and VueJs",
+  "author": "Asapdotid",
+  "contributors": [
+    "Asapdotid <asapdotid@gmail.com>"
+  ],
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "firebase",
+    "nestjs",
+    "express",
+    "vuejs"
+  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/firebase-monorepo-core"
+    ]
+  },
+  "scripts": {
+    "workspace:build:core": "yarn workspace firebase-monorepo-core build",
+    "workspace:pack:core": "yarn workspace firebase-monorepo-core pack",
+    "workspace:build:backend": "yarn workspace firebase-monorepo-backend build",
+    "workspace:build:frontend": "yarn workspace firebase-monorepo-frontend build",
+    "workspace:start:core": "yarn workspace firebase-monorepo-core start",
+    "workspace:start:backend": "yarn workspace firebase-monorepo-backend start:dev",
+    "workspace:start:frontend": "yarn workspace firebase-monorepo-frontend serve",
+    "build:core": "yarn workspace:build:core",
+    "pack:core": "yarn workspace:pack:core",
+    "build:backend": "run-s workspace:build:core workspace:build:backend",
+    "build:frontend": "run-s workspace:build:core workspace:build:frontend",
+    "start:core": "yarn workspace:build:core",
+    "start:backend": "run-s workspace:build:core workspace:start:backend",
+    "start:frontend": "run-s workspace:build:core workspace:start:frontend",
+    "deploy:backend": "firebase deploy --only functions",
+    "deploy:frontend": "firebase deploy --only hosting"
+  },
+  "dependencies": {
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.5"
+  }
+}

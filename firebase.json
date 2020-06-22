@@ -1,0 +1,41 @@
+{
+  "functions": {
+    "source": "packages/backend",
+    "predeploy": ["yarn workspace:build:core", "yarn workspace:build:backend"],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  },
+  "hosting": {
+    "public": "packages/frontend/dist",
+    "predeploy": ["yarn workspace:build:core", "yarn workspace:build:frontend"],
+    "headers": [
+      {
+        "source": "/service-worker.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "function": "webApi"
+      },
+      {
+        "source": "!/@(api)/**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "emulators": {
+    "functions": {
+      "port": 5001
+    },
+    "hosting": {
+      "port": 8080
+    }
+  }
+}
